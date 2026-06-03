@@ -106,7 +106,7 @@ const game = () => {
         updateScore();
         return;
       } else {
-        winner.textContent = "player  wins";
+        winner.textContent = "Player  Wins";
         pScore++;
         updateScore();
         return;
