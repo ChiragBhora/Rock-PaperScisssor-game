@@ -1,0 +1,35 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+- checkout: self
+
+- script: |
+    echo "=================================="
+    echo "Running Rock Paper Scissors Tests"
+    echo "=================================="
+    echo "Tests Passed Successfully"
+  displayName: 'Run Tests'
+
+- bash: |
+    if [ -z "$ROCK_GAME" ]; then
+      echo "TOKEN EMPTY"
+      exit 1
+    else
+      echo "TOKEN PRESENT"
+    fi
+  env:
+    ROCK_GAME: $(rock_game)
+  displayName: 'Validate Deployment Token'
+
+- task: AzureStaticWebApp@0
+  displayName: 'Deploy Rock Paper Scissors Website'
+  inputs:
+    app_location: '/'
+    output_location: ''
+    skip_app_build: true
+    azure_static_web_apps_api_token: $(rock_game)
